@@ -11,12 +11,19 @@ public class WallMover : MonoBehaviour
     public Text uiText;
     public float textTimer = 2f;
     private float textTimeTemp = 0f;
+    public GameObject[] wallSets;
+    //private GameObject currentSet;
 
     // Start is called before the first frame update
     void Start()
     {
         currentMoveSpeed = moveSpeed;
         //should maybe load a default/random wall 'set' from a list of prefabs here, and do so again after 'cleanup'
+        if (wallSets.Length > 0)
+        {            
+            GameObject currentSet = Instantiate(wallSets[Random.Range(0, wallSets.Length - 1)], this.transform);
+            currentSet.transform.position = this.transform.position;
+        }
     }
 
     // Update is called once per frame
