@@ -7,6 +7,7 @@ public class WallMover : MonoBehaviour
 {
 
     public float moveSpeed = -0.5f;
+    private float currentMoveSpeed = 0;
     public Text uiText;
     public float textTimer = 2f;
     private float textTimeTemp = 0f;
@@ -14,13 +15,14 @@ public class WallMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentMoveSpeed = moveSpeed;
+        //should maybe load a default/random wall 'set' from a list of prefabs here, and do so again after 'cleanup'
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position += new Vector3(0, 0, moveSpeed * Time.deltaTime);
+        this.transform.position += new Vector3(0, 0, currentMoveSpeed * Time.deltaTime);
         if (textTimeTemp > 0)
         {
             textTimeTemp -= Time.deltaTime;
@@ -31,16 +33,22 @@ public class WallMover : MonoBehaviour
         }
     }
 
+    //When we hit the triggers on kyle's head, hands, feet, or torso
     private void OnTriggerEnter(Collider other)
     {
         if (uiText != null)
         {
+            //this was mostly just to test collisions, before implementing wall crumble
             uiText.text = "Ouch!";
             textTimeTemp = textTimer;
+            currentMoveSpeed = 0f;
+            //trigger wall crumble
             Crumble();
         }
     }
 
+    //Gets all grandchildren of wall and gives them a non-kinematic rigidbody affected by gravity 
+    //this will make all the children act independently of the wall and fall to pieces
     private void Crumble()
     {
         foreach (Transform childTransform in this.GetComponentInChildren<Transform>())
