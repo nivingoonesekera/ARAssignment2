@@ -18,10 +18,10 @@ public class WallMover : MonoBehaviour
     void Start()
     {
         currentMoveSpeed = moveSpeed;
-        //should maybe load a default/random wall 'set' from a list of prefabs here, and do so again after 'cleanup'
+        //loads first wall set to move towards player
         if (wallSets.Length > 0)
         {            
-            GameObject currentSet = Instantiate(wallSets[Random.Range(0, wallSets.Length - 1)], this.transform);
+            GameObject currentSet = Instantiate(wallSets[0], this.transform);
             currentSet.transform.position = this.transform.position;
         }
     }

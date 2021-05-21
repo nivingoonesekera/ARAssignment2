@@ -61,3 +61,5 @@ crashlytics-build.properties
 Assets/AzureKinectExamples/
 *.dll
 *.onnx
+*.bin
+.collabignore
